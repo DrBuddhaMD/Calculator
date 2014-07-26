@@ -39,7 +39,7 @@ public class calculator extends Activity {
 
         //Calculation method: Operation
 
-        finalAnswer = new Double(operation(numberOne, numberTwo)).toString());
+        finalAnswer = Double.toString(operation(numberOne, numberTwo));
 
 
 
