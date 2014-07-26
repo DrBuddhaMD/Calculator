@@ -35,6 +35,7 @@ public class calculator extends Activity {
         //Display Second number
         secondNumber=(EditText)findViewById(R.id.numberTwo);
         secondNumber.setText(new Double(numberTwo).toString());
+        int i = 0;
 
 
         //Calculation method: Operation
