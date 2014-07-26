@@ -4,21 +4,53 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 
 public class calculator extends Activity {
 
     TextView disp;
-    double finalAnswer;
+    EditText firstNumber;
+    EditText secondNumber;
+    String finalAnswer;
+    int operatorId;
+    double numberOne;
+    double numberTwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
 
+        //Load first number into numberOne
+
+        //Display First number
+        firstNumber=(EditText)findViewById(R.id.numberOne);
+        firstNumber.setText(new Double(numberOne).toString());
+
+        //Load second number into numberTwo
+
+        //Display Second number
+        secondNumber=(EditText)findViewById(R.id.numberTwo);
+        secondNumber.setText(new Double(numberTwo).toString());
+
+
+        //Calculation method: Operation
+
+        finalAnswer = new Double(operation(numberOne, numberTwo)).toString());
+
+
+
+        //Display Answer
         disp=(TextView)findViewById(R.id.answerView);
         disp.setText(new Double(finalAnswer).toString());
+
+
+
+
+
 
     }
 
@@ -41,4 +73,31 @@ public class calculator extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    public double operation( double numberOne, double numberTwo){
+
+        double result = 0;
+
+        switch(operatorId){
+            case 1:
+                result = numberOne + numberTwo;
+                break;
+            case 2:
+                result = Math.abs(numberOne - numberTwo);
+                break;
+            case 3:
+                result = numberOne * numberTwo;
+                break;
+            case 4:
+                //TODO operation for numberTwo = 0
+                result = numberOne * numberTwo;
+                break;
+        }
+
+
+        return result;
+
+    }
+
 }
