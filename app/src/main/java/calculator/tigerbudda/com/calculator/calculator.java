@@ -15,7 +15,7 @@ public class calculator extends Activity {
     //Operation Variables
     double numberOne;
     int operatorId = 1;
-    String[] operators = {"Add(+)", "Subtract(-)", "Multiply(x)", "Divide(/)"};
+    String[] operators = {"Add(+)", "Subtract(-)", "Multiply(x)", "Divide(/)","Exponent(^)", "Square Root(√)"};
     String error = null;
     double numberTwo;
     String finalAnswer;
@@ -46,6 +46,10 @@ public class calculator extends Activity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(calculator.this, android.R.layout.simple_spinner_item, operators);
         s.setAdapter(adapter);
 
+        //Initialzing doubles to ensure no crashes
+        numberOne = 0;
+        numberTwo = 0;
+
         /*
          * Load first number into numberOne
          * operation to operatorId
@@ -65,7 +69,14 @@ public class calculator extends Activity {
                 operatorId = s.getSelectedItemPosition();
 
                 //Load numberTwo
-                numberTwo = Double.parseDouble(secondNumber.getText().toString());
+                if(operatorId == 5){
+                    numberTwo = 0;
+
+                }else{
+                    numberTwo = Double.parseDouble(secondNumber.getText().toString());
+                }
+
+
 
                 //Calculation method: Operation
                 finalAnswer = operation(numberOne, numberTwo, operatorId);
@@ -112,6 +123,24 @@ public class calculator extends Activity {
                 }
                 result = numberOne / numberTwo;
                 break;
+            case 4:
+                result = Math.pow(numberOne, numberTwo);
+                break;
+            case 5:
+                if( numberOne/Math.abs(numberOne) == -1 ) {
+
+                    result = Math.sqrt(Math.abs(numberOne));
+                    answer = result + "i";
+                    return answer;
+
+                }
+                else{
+                    result = Math.sqrt(numberOne);
+                }
+
+                break;
+
+
         }
 
 
