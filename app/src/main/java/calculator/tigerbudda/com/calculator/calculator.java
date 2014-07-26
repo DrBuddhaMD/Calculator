@@ -2,36 +2,37 @@ package calculator.tigerbudda.com.calculator;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 
 
 public class calculator extends Activity {
 
-    TextView d;
-    EditText firstNumber;
-    EditText secondNumber;
-    String finalAnswer;
-    Button b;
-    Spinner s;
-    int operatorId = 1;
+    //Operation Variables
     double numberOne;
-    double numberTwo;
+    int operatorId = 1;
     String[] operators = {"Add(+)", "Subtract(-)", "Multiply(x)", "Divide(/)"};
     String error = null;
+    double numberTwo;
+    String finalAnswer;
+
+    //Display objects and Variables
+    EditText firstNumber;
+    Spinner s;
+    EditText secondNumber;
+    Button b;
+    TextView d;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
 
+        //Initialization of components
         d=(TextView)findViewById(R.id.answerView);
         firstNumber=(EditText)findViewById(R.id.numberOne);
         secondNumber=(EditText)findViewById(R.id.numberTwo);
@@ -42,12 +43,17 @@ public class calculator extends Activity {
         d.setText("SOLUTION");
 
         //Setup spinner
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(calculator.this, android.R.layout.simple_spinner_item, operators);
         s.setAdapter(adapter);
 
-        //Load first number into numberOne, operation to operatorId, second number into numberTwo
-
+        /*
+         * Load first number into numberOne
+         * operation to operatorId
+         * second number into numberTwo
+         * Perform Operations
+         * Assign finalAnswer
+         * Display Answer
+         */
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,8 +68,7 @@ public class calculator extends Activity {
                 numberTwo = Double.parseDouble(secondNumber.getText().toString());
 
                 //Calculation method: Operation
-                finalAnswer = Double.toString(operation(numberOne, numberTwo, operatorId));
-
+                finalAnswer = operation(numberOne, numberTwo, operatorId);
 
                 //Display Answer
                 d.setText(finalAnswer);
@@ -76,32 +81,47 @@ public class calculator extends Activity {
     }
 
 
-    public double operation( double numberOne, double numberTwo, int operatorId){
+    public String operation( double numberOne, double numberTwo, int operatorId){
 
+        //Variables
+        String answer;
         double result = 0;
 
+        //Choosing operation depending on operatorId
+        /*  0 --> Addition
+         *  1 --> Subtraction
+         *  2 --> Division
+         *  3 --> Multiplication
+         */
         switch(operatorId){
             case 0:
                 result = numberOne + numberTwo;
                 break;
             case 1:
-                result = Math.abs(numberOne - numberTwo);
+                result = numberOne - numberTwo;
                 break;
             case 2:
                 result = numberOne * numberTwo;
                 break;
             case 3:
-                //TODO operation for numberTwo = 0
+                //Error if number is 0.
                 if(numberTwo == 0){
                     error = "Cannot Divide by 0";
-                    break;
+                    answer = error;
+                    return answer;
                 }
                 result = numberOne / numberTwo;
                 break;
         }
 
 
-        return result;
+        //Round the decimals
+        result = (double)Math.round(result * 1000)/1000;
+
+        //Convert answer into String
+        answer = Double.toString(result);
+
+        return answer;
 
     }
 
