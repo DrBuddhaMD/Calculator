@@ -4,14 +4,22 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
 public class calculator extends Activity {
+
+    TextView disp;
+    double finalAnswer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
+
+        disp=(TextView)findViewById(R.id.answerView);
+        disp.setText(new Double(finalAnswer).toString());
+
     }
 
 
